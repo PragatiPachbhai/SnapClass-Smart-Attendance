@@ -8,6 +8,11 @@ setuptools<81
 
 # DATABASE
 supabase==2.31.0
+realtime==2.31.0
+supabase-auth==2.31.0
+supabase-functions==2.31.0
+storage3==2.31.0
+postgrest==2.31.0
 bcrypt
 
 # QR CODE
