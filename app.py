@@ -1,10 +1,6 @@
 import streamlit as st
 
 from src.screens.home_screen import home_screen
-from src.screens.teacher_screen import teacher_screen
-from src.screens.student_screen import student_screen
-
-from src.components.dialog_auto_enroll import auto_enroll_dialog
 
 def main():
     st.set_page_config(
@@ -16,9 +12,11 @@ def main():
 
     match st.session_state['login_type']:
         case 'teacher':
+            from src.screens.teacher_screen import teacher_screen
             teacher_screen()
 
         case 'student':
+            from src.screens.student_screen import student_screen
             student_screen()
         
         case None:
@@ -27,6 +25,7 @@ def main():
 
     join_code = st.query_params.get('join-code')
     if join_code:
+        from src.components.dialog_auto_enroll import auto_enroll_dialog
         if st.session_state.login_type != 'student':
             st.session_state.login_type = 'student'
             st.rerun()
