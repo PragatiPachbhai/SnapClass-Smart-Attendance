@@ -7,7 +7,7 @@ git+https://github.com/ageitgey/face_recognition_models
 setuptools<81
 
 # DATABASE
-supabase
+supabase==2.31.0
 bcrypt
 
 # QR CODE
@@ -18,4 +18,3 @@ segno
 librosa
 resemblyzer
 webrtcvad-wheels
-typing
