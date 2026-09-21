@@ -1,0 +1,21 @@
+streamlit
+# FACE RECOGNITION
+scikit-learn
+dlib-bin
+face-recognition
+git+https://github.com/ageitgey/face_recognition_models
+setuptools<81
+
+# DATABASE
+supabase
+bcrypt
+
+# QR CODE
+segno
+
+
+# AUDIO / VOICE
+librosa
+resemblyzer
+webrtcvad-wheels
+typing
