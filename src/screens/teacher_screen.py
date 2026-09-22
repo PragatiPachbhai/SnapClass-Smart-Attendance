@@ -10,6 +10,7 @@ from src.components.dialog_create_subject import create_subject_dialog
 from src.components.dialog_share_subject import share_subject_dialog
 from src.components.dialog_add_photo import add_photos_dialog
 
+from src.pipelines.face_pipeline import predict_attendance
 from src.components.dialog_attendance_results import attendance_result_dialog
 import numpy as np
 
@@ -20,6 +21,7 @@ import pandas as pd
 from src.database.config import supabase
 
 
+from src.components.dialog_voice_attendance import voice_attendance_dialog
 def teacher_screen():
 
     style_background_dashboard()
@@ -137,8 +139,6 @@ def teacher_tab_take_attendance():
     with c2:
         
         if st.button('Run Face Analysis', width='stretch', type='secondary', icon=':material/analytics:', disabled=not has_photos):
-            from src.pipelines.face_pipeline import predict_attendance
-
             with st.spinner('Deep scanning classroom photos...'):
                 all_detected_ids = {}
 
@@ -188,8 +188,6 @@ def teacher_tab_take_attendance():
 
     with c3:
         if st.button('Use Voice Attendance', type='primary', width='stretch', icon=':material/mic:'):
-            from src.components.dialog_voice_attendance import voice_attendance_dialog
-
             voice_attendance_dialog(selected_subject_id)
 
 
