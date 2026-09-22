@@ -7,7 +7,7 @@ git+https://github.com/ageitgey/face_recognition_models
 setuptools<81
 
 # DATABASE
-supabase==2.31.0
+supabase==2.15.3
 bcrypt
 
 # QR CODE
