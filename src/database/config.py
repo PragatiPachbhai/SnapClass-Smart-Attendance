@@ -1,8 +1,9 @@
 from dataclasses import dataclass, field
+import json
 from typing import Any
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
+from urllib.request import Request, urlopen
 
-import httpx
 import streamlit as st
 
 
@@ -43,13 +44,22 @@ class _Query:
         headers = _client.headers.copy()
         if self.operation == "insert":
             headers["Prefer"] = "return=representation"
-            response = httpx.post(url, headers=headers, json=self.payload, timeout=30)
+            request = Request(
+                url,
+                data=json.dumps(self.payload).encode(),
+                headers=headers,
+                method="POST",
+            )
         elif self.operation == "delete":
-            response = httpx.delete(url, headers=headers, params=params, timeout=30)
+            request = Request(
+                f"{url}?{urlencode(params)}", headers=headers, method="DELETE"
+            )
         else:
-            response = httpx.get(url, headers=headers, params=params, timeout=30)
-        response.raise_for_status()
-        return type("Response", (), {"data": response.json()})()
+            request = Request(
+                f"{url}?{urlencode(params)}", headers=headers, method="GET"
+            )
+        with urlopen(request, timeout=30) as response:
+            return type("Response", (), {"data": json.loads(response.read())})()
 
 
 class _RestClient:
