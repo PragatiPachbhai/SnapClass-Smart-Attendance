@@ -6,8 +6,6 @@ from src.components.header import header_dashboard
 from src.components.footer import footer_dashboard
 from PIL import Image
 import numpy as np
-from src.pipelines.face_pipeline import predict_attendance, get_face_embeddings, train_classifier
-from src.pipelines.voice_pipeline import get_voice_embedding
 from src.database.db import get_all_students, create_student, get_student_subjects, get_student_attendance, unenroll_student_to_subject
 import time
 
@@ -114,6 +112,8 @@ def student_screen():
     photo_source = st.camera_input("Position your face in the center")
 
     if photo_source:
+        from src.pipelines.face_pipeline import predict_attendance
+
         img = np.array(Image.open(photo_source))
 
         with st.spinner('AI is scanning..'):
@@ -157,6 +157,8 @@ def student_screen():
 
             if st.button('Create Account', type='primary'):
                 if new_name:
+                    from src.pipelines.face_pipeline import get_face_embeddings, train_classifier
+
                     with st.spinner('Creating profile..'):
                         img = np.array(Image.open(photo_source))
                         encodings= get_face_embeddings(img)
@@ -165,6 +167,8 @@ def student_screen():
 
                             voice_emb = None
                             if audio_data:
+                                from src.pipelines.voice_pipeline import get_voice_embedding
+
                                 voice_emb = get_voice_embedding(audio_data.read())
 
                             response_data = create_student(new_name, face_embedding=face_emb, voice_embedding=voice_emb)
